@@ -11,12 +11,12 @@ import java.util.List;
 public class PessoaDAO
 {
 
-    Conexao conexao = new Conexao();
+    //Conexao Conexao = new Conexao();
 
     public void cadastrarPessoa(Pessoa pessoa)
     {
 
-        Connection conn = conexao.conectar();
+        Connection conn = Conexao.conectar();
 
         if (conn != null)
         {
@@ -32,27 +32,27 @@ public class PessoaDAO
 
                 if (linhasAfetadas > 0)
                 {
-                    conexao.mensagem = "Pessoa cadastrada com sucesso.";
+                    Conexao.mensagem = "Pessoa cadastrada com sucesso.";
                 }
                 else
                 {
-                    conexao.mensagem = "Falha ao cadastrar a pessoa. Nenhuma linha foi afetada.";
+                    Conexao.mensagem = "Falha ao cadastrar a pessoa. Nenhuma linha foi afetada.";
                 }
             }
             catch (SQLException e)
             {
-                conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
+                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
             }
             finally
             {
-                //conexao.desconectar();
+                //Conexao.desconectar();
             }
         }
     }
 
     public Pessoa pesquisarPessoa(Pessoa pessoa)
     {
-        Connection conn = conexao.conectar();
+        Connection conn = Conexao.conectar();
 
         if (conn != null)
         {
@@ -75,11 +75,11 @@ public class PessoaDAO
             }
             catch (SQLException e)
             {
-                conexao.mensagem = "Erro ao pesquisar pessoa: " + e.getMessage();
+                Conexao.mensagem = "Erro ao pesquisar pessoa: " + e.getMessage();
             }
             finally
             {
-                conexao.desconectar();
+                Conexao.desconectar();
             }
         }
 
@@ -88,7 +88,7 @@ public class PessoaDAO
 
     public void editarPessoa(Pessoa pessoa)
     {
-        Connection conn = conexao.conectar();
+        Connection conn = Conexao.conectar();
 
         if (conn != null)
         {
@@ -105,27 +105,27 @@ public class PessoaDAO
 
                 if (linhasAfetadas > 0)
                 {
-                    conexao.mensagem = "Pessoa atualizada com sucesso.";
+                    Conexao.mensagem = "Pessoa atualizada com sucesso.";
                 }
                 else
                 {
-                    conexao.mensagem = "Falha ao atualizar a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
+                    Conexao.mensagem = "Falha ao atualizar a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
                 }
             }
             catch (SQLException e)
             {
-                conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
+                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
             }
             finally
             {
-                conexao.desconectar();
+                Conexao.desconectar();
             }
         }
     }
 
     public void excluirPessoa(Pessoa pessoa)
     {
-        Connection conn = conexao.conectar();
+        Connection conn = Conexao.conectar();
 
         if (conn != null)
         {
@@ -139,27 +139,27 @@ public class PessoaDAO
 
                 if (linhasAfetadas > 0)
                 {
-                    conexao.mensagem = "Pessoa excluída com sucesso.";
+                    Conexao.mensagem = "Pessoa excluída com sucesso.";
                 }
                 else
                 {
-                    conexao.mensagem = "Falha ao excluir a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
+                    Conexao.mensagem = "Falha ao excluir a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
                 }
             }
             catch (SQLException e)
             {
-                conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
+                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
             }
             finally
             {
-                conexao.desconectar();
+                Conexao.desconectar();
             }
         }
     }
 
     public List<Pessoa> pesquisarPessoaporNome(Pessoa pessoa)
     {
-        Connection conn = conexao.conectar();
+        Connection conn = Conexao.conectar();
         List<Pessoa> listaPessoas = new ArrayList<>();
 
         if (conn != null)
@@ -186,11 +186,11 @@ public class PessoaDAO
             }
             catch (SQLException e)
             {
-                conexao.mensagem = "Erro ao pesquisar pessoas por nome: " + e.getMessage();
+                Conexao.mensagem = "Erro ao pesquisar pessoas por nome: " + e.getMessage();
             }
             finally
             {
-                conexao.desconectar();
+                Conexao.desconectar();
             }
         }
 

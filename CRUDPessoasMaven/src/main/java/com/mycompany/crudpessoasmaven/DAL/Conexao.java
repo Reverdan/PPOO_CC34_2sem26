@@ -20,12 +20,12 @@ jdbc:sqlserver://localhost\DESKTOP-0BMMDJG\SQLEXPRESS:1433;databaseName=cc34; en
  */
 public class Conexao
 {
-    Connection conexao;
-    public String mensagem;
+    public static Connection conexao;
+    public static String mensagem;
     
-    public Connection conectar()
+    public static Connection conectar()
     {
-        this.mensagem = "";
+        mensagem = "";
         try
         {
             if (conexao == null || conexao.isClosed())
@@ -37,12 +37,12 @@ public class Conexao
         } 
         catch (SQLException e)
         {
-            this.mensagem = "Erro de conexâo com BD";
+            mensagem = "Erro de conexâo com BD";
         }
         return conexao;
     }
     
-    public void desconectar()
+    public static void desconectar()
     {
         try
         {
@@ -53,7 +53,7 @@ public class Conexao
         } 
         catch (SQLException e)
         {
-            this.mensagem = "Erro ao fechar BD";
+            mensagem = "Erro ao fechar BD";
         }
     }
 }
