@@ -71,6 +71,10 @@ public class PessoaDAO
                         pessoa.setRg(rs.getString("rg"));
                         pessoa.setCpf(rs.getString("cpf"));
                     }
+                    else
+                    {
+                        Conexao.mensagem = "Não existe pessoa com este ID";
+                    }
                 }
             }
             catch (SQLException e)

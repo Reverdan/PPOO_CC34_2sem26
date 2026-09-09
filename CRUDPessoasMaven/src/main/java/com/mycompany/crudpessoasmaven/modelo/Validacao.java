@@ -12,7 +12,7 @@ public class Validacao
     {
         if (numId == null || numId.trim().isEmpty())
         {
-            this.mensagem = "ID não informado.";
+            this.mensagem = "ID não informado.\n";
         }
         else
         {
@@ -23,7 +23,7 @@ public class Validacao
             }
             catch (NumberFormatException e)
             {
-                this.mensagem = "ID inválido. O valor informado não é um número inteiro válido.";
+                this.mensagem = "ID inválido. O valor informado não é um número inteiro válido.\n";
             }
         }
     }
@@ -34,7 +34,7 @@ public class Validacao
 
         if (listaDadosPessoa == null || listaDadosPessoa.size() != 4)
         {
-            this.mensagem = "A lista de dados deve conter exatamente 4 elementos: id, nome, rg e cpf.";
+            this.mensagem = "A lista de dados deve conter exatamente 4 elementos: id, nome, rg e cpf.\n";
             return;
         }
 
@@ -51,18 +51,18 @@ public class Validacao
 
         if (nome == null || nome.trim().isEmpty())
         {
-            mensagens.append("O nome é obrigatório. ");
+            mensagens.append("O nome é obrigatório. \n");
         }
         else
         {
             if (nome.trim().length() < 3)
             {
-                mensagens.append("O nome deve possuir no mínimo 3 caracteres. ");
+                mensagens.append("O nome deve possuir no mínimo 3 caracteres. \n");
             }
 
             if (nome.length() > 50)
             {
-                mensagens.append("O nome deve possuir no máximo 50 caracteres. ");
+                mensagens.append("O nome deve possuir no máximo 50 caracteres. \n");
             }
         }
 
@@ -70,7 +70,7 @@ public class Validacao
         {
             if (rg.length() > 11)
             {
-                mensagens.append("O RG deve possuir no máximo 11 caracteres. ");
+                mensagens.append("O RG deve possuir no máximo 11 caracteres. \n");
             }
         }
 
@@ -78,7 +78,7 @@ public class Validacao
         {
             if (cpf.length() > 13)
             {
-                mensagens.append("O CPF deve possuir no máximo 13 caracteres. ");
+                mensagens.append("O CPF deve possuir no máximo 13 caracteres. \n");
             }
         }
 

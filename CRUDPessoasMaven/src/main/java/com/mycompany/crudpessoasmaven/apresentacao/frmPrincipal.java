@@ -32,21 +32,52 @@ public class frmPrincipal extends javax.swing.JDialog
     private void initComponents()
     {
 
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuPessoas = new javax.swing.JMenu();
+        mniCadastrar = new javax.swing.JMenuItem();
+        mniPEE = new javax.swing.JMenuItem();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        mnuPessoas.setText("Pessoas");
+
+        mniCadastrar.setText("Cadastrar");
+        mniCadastrar.addActionListener(this::mniCadastrarActionPerformed);
+        mnuPessoas.add(mniCadastrar);
+
+        mniPEE.setText("Pesquisar, editar e excluir");
+        mniPEE.addActionListener(this::mniPEEActionPerformed);
+        mnuPessoas.add(mniPEE);
+
+        jMenuBar1.add(mnuPessoas);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGap(0, 355, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGap(0, 110, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void mniCadastrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mniCadastrarActionPerformed
+    {//GEN-HEADEREND:event_mniCadastrarActionPerformed
+        frmCadastro frmC = new frmCadastro(null, true);
+        frmC.setVisible(true);
+    }//GEN-LAST:event_mniCadastrarActionPerformed
+
+    private void mniPEEActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_mniPEEActionPerformed
+    {//GEN-HEADEREND:event_mniPEEActionPerformed
+        frmPEE frmPee = new frmPEE(null, true);
+        frmPee.setVisible(true);
+    }//GEN-LAST:event_mniPEEActionPerformed
 
     /**
      * @param args the command line arguments
@@ -95,5 +126,9 @@ public class frmPrincipal extends javax.swing.JDialog
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem mniCadastrar;
+    private javax.swing.JMenuItem mniPEE;
+    private javax.swing.JMenu mnuPessoas;
     // End of variables declaration//GEN-END:variables
 }

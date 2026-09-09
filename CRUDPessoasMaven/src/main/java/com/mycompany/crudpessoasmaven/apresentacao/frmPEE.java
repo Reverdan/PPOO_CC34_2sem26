@@ -4,13 +4,17 @@
  */
 package com.mycompany.crudpessoasmaven.apresentacao;
 
+import com.mycompany.crudpessoasmaven.modelo.Controle;
+import com.mycompany.crudpessoasmaven.modelo.Pessoa;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author rever
  */
 public class frmPEE extends javax.swing.JDialog
 {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmPEE.class.getName());
 
     /**
@@ -32,21 +36,116 @@ public class frmPEE extends javax.swing.JDialog
     private void initComponents()
     {
 
+        lblNome = new javax.swing.JLabel();
+        txfNome = new javax.swing.JTextField();
+        lblRg = new javax.swing.JLabel();
+        txfRg = new javax.swing.JTextField();
+        lblCpf = new javax.swing.JLabel();
+        txfCpf = new javax.swing.JTextField();
+        btnEditar = new javax.swing.JButton();
+        lblId = new javax.swing.JLabel();
+        txfId = new javax.swing.JTextField();
+        btnPesquisarPorId = new javax.swing.JButton();
+        btnPesquisarPorNome = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        lblNome.setText("Nome");
+
+        lblRg.setText("RG");
+
+        lblCpf.setText("CPF");
+
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(this::btnEditarActionPerformed);
+
+        lblId.setText("ID");
+
+        btnPesquisarPorId.setText("Pesquisar");
+        btnPesquisarPorId.addActionListener(this::btnPesquisarPorIdActionPerformed);
+
+        btnPesquisarPorNome.setText("Pesquisar");
+
+        btnExcluir.setText("Excluir");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(81, 81, 81)
+                        .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNome)
+                                    .addComponent(lblRg)
+                                    .addComponent(lblId))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txfRg, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(25, 25, 25)
+                                        .addComponent(lblCpf)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txfCpf))
+                                    .addComponent(txfNome, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnExcluir))))
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(btnPesquisarPorNome, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnPesquisarPorId, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblId)
+                    .addComponent(txfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarPorId))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNome)
+                    .addComponent(txfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarPorNome))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRg)
+                    .addComponent(txfRg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCpf)
+                    .addComponent(txfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEditar)
+                    .addComponent(btnExcluir))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
+    {//GEN-HEADEREND:event_btnEditarActionPerformed
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnPesquisarPorIdActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPesquisarPorIdActionPerformed
+    {//GEN-HEADEREND:event_btnPesquisarPorIdActionPerformed
+        Controle controle = new Controle();
+        Pessoa pessoa = controle.pesquisarPessoa(txfId.getText());
+        txfNome.setText(pessoa.getNome());
+        txfRg.setText(pessoa.getRg());
+        txfCpf.setText(pessoa.getCpf());
+        JOptionPane.showMessageDialog(null, controle.getMensagem());
+    }//GEN-LAST:event_btnPesquisarPorIdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -68,7 +167,8 @@ public class frmPEE extends javax.swing.JDialog
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex)
+        }
+        catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex)
         {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -95,5 +195,17 @@ public class frmPEE extends javax.swing.JDialog
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnPesquisarPorId;
+    private javax.swing.JButton btnPesquisarPorNome;
+    private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblRg;
+    private javax.swing.JTextField txfCpf;
+    private javax.swing.JTextField txfId;
+    private javax.swing.JTextField txfNome;
+    private javax.swing.JTextField txfRg;
     // End of variables declaration//GEN-END:variables
 }
