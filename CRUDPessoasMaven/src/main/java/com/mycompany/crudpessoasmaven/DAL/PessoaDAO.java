@@ -70,6 +70,7 @@ public class PessoaDAO
                         pessoa.setNome(rs.getString("nome"));
                         pessoa.setRg(rs.getString("rg"));
                         pessoa.setCpf(rs.getString("cpf"));
+                        Conexao.mensagem = "Pesquisa realizada";
                     }
                     else
                     {

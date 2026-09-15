@@ -6,6 +6,8 @@ package com.mycompany.crudpessoasmaven.apresentacao;
 
 import com.mycompany.crudpessoasmaven.modelo.Controle;
 import com.mycompany.crudpessoasmaven.modelo.Pessoa;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -68,6 +70,7 @@ public class frmPEE extends javax.swing.JDialog
         btnPesquisarPorNome.setText("Pesquisar");
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(this::btnExcluirActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -134,6 +137,15 @@ public class frmPEE extends javax.swing.JDialog
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
     {//GEN-HEADEREND:event_btnEditarActionPerformed
+        List<String> listaDadosPessoa = new ArrayList();
+        listaDadosPessoa.add(txfId.getText());
+        listaDadosPessoa.add(txfNome.getText());
+        listaDadosPessoa.add(txfRg.getText());
+        listaDadosPessoa.add(txfCpf.getText());
+
+        Controle controle = new Controle();
+        controle.editarPessoa(listaDadosPessoa);
+        JOptionPane.showMessageDialog(null, controle.getMensagem());
 
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -146,6 +158,21 @@ public class frmPEE extends javax.swing.JDialog
         txfCpf.setText(pessoa.getCpf());
         JOptionPane.showMessageDialog(null, controle.getMensagem());
     }//GEN-LAST:event_btnPesquisarPorIdActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnExcluirActionPerformed
+    {//GEN-HEADEREND:event_btnExcluirActionPerformed
+        int resp = JOptionPane.showConfirmDialog(null,
+                "Deseja realmente excluir?",
+                "Exclusão", JOptionPane.YES_NO_OPTION);
+        if (resp == JOptionPane.YES_OPTION)
+        {
+            Controle controle = new Controle();
+            controle.excluirPessoa(txfId.getText());
+            JOptionPane.showMessageDialog(null, controle.getMensagem());
+        }
+
+
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
