@@ -4,16 +4,16 @@
  */
 package com.mycompany.crudpessoasmaven.modelo;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 /**
  *
@@ -38,7 +38,6 @@ public class Pessoa implements Serializable
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
     @Column(name = "nome")
     private String nome;
     @Column(name = "rg")
@@ -53,12 +52,6 @@ public class Pessoa implements Serializable
     public Pessoa(Integer id)
     {
         this.id = id;
-    }
-
-    public Pessoa(Integer id, String nome)
-    {
-        this.id = id;
-        this.nome = nome;
     }
 
     public Integer getId()

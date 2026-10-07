@@ -1,5 +1,6 @@
 package com.mycompany.crudpessoasmaven.DAL;
 
+
 import com.mycompany.crudpessoasmaven.modelo.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 
 public class PessoaDAO
 {
@@ -15,8 +19,21 @@ public class PessoaDAO
 
     public void cadastrarPessoa(Pessoa pessoa)
     {
+        try
+        {
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.persist(pessoa);
+            transaction.commit();
+            session.close();
+            Conexao.mensagem = "Pessoa cadastrada !";
+        }
+        catch (Exception e)
+        {
+            Conexao.mensagem = "Erro ao cadastrar";
+        }
 
-        Connection conn = Conexao.conectar();
+        /*Connection conn = Conexao.conectar();
 
         if (conn != null)
         {
@@ -47,7 +64,7 @@ public class PessoaDAO
             {
                 //Conexao.desconectar();
             }
-        }
+        }*/
     }
 
     public Pessoa pesquisarPessoa(Pessoa pessoa)

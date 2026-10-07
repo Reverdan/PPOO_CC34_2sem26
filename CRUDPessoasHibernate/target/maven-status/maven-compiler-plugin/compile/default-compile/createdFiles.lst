@@ -9,6 +9,7 @@ com\mycompany\crudpessoasmaven\DAL\PessoaDAO.class
 com\mycompany\crudpessoasmaven\CRUDPessoasMaven.class
 com\mycompany\crudpessoasmaven\apresentacao\frmPrincipal$1$1.class
 com\mycompany\crudpessoasmaven\apresentacao\frmPEE$1$1.class
+com\mycompany\crudpessoasmaven\DAL\HibernateUtil.class
 com\mycompany\crudpessoasmaven\modelo\Pessoa.class
 com\mycompany\crudpessoasmaven\apresentacao\frmCadastro$1$1.class
 com\mycompany\crudpessoasmaven\DAL\Conexao.class

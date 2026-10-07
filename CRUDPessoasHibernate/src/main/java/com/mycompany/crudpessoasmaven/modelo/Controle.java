@@ -21,7 +21,7 @@ public class Controle
         else
         {
             Pessoa pessoa = new Pessoa();
-            pessoa.setId(0);
+            //pessoa.setId(0);
             pessoa.setNome(listaDadosPessoa.get(1));
             pessoa.setRg(listaDadosPessoa.get(2));
             pessoa.setCpf(listaDadosPessoa.get(3));
