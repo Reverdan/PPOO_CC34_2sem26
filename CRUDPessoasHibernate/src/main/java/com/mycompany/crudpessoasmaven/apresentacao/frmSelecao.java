@@ -4,6 +4,10 @@
  */
 package com.mycompany.crudpessoasmaven.apresentacao;
 
+import com.mycompany.crudpessoasmaven.modelo.Estaticos;
+import com.mycompany.crudpessoasmaven.modelo.Pessoa;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author rever
@@ -13,6 +17,18 @@ public class frmSelecao extends javax.swing.JDialog
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmSelecao.class.getName());
 
+    public void preencherTabela()
+    {
+        DefaultTableModel modelo = (DefaultTableModel) tblPessoas.getModel();
+        modelo.setNumRows(0);
+        for (Pessoa p : Estaticos.listaPessoas)
+        {
+            modelo.addRow(new Object[]
+            {
+                p.getId(), p.getNome(), p.getRg(), p.getCpf()
+            });
+        }
+    }
     /**
      * Creates new form frmSelecao
      */
@@ -20,6 +36,7 @@ public class frmSelecao extends javax.swing.JDialog
     {
         super(parent, modal);
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -63,6 +80,13 @@ public class frmSelecao extends javax.swing.JDialog
                 return canEdit [columnIndex];
             }
         });
+        tblPessoas.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                tblPessoasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblPessoas);
 
         btnOk.setText("Ok");
@@ -97,6 +121,15 @@ public class frmSelecao extends javax.swing.JDialog
     {//GEN-HEADEREND:event_btnOkActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnOkActionPerformed
+
+    private void tblPessoasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_tblPessoasMouseClicked
+    {//GEN-HEADEREND:event_tblPessoasMouseClicked
+        int linha = tblPessoas.getSelectedRow();
+        Estaticos.pessoa.setId((int) tblPessoas.getValueAt(linha, 0));
+        Estaticos.pessoa.setNome((String)tblPessoas.getValueAt(linha, 1));
+        Estaticos.pessoa.setRg((String)tblPessoas.getValueAt(linha, 2));
+        Estaticos.pessoa.setCpf((String)tblPessoas.getValueAt(linha, 3));
+    }//GEN-LAST:event_tblPessoasMouseClicked
 
     /**
      * @param args the command line arguments

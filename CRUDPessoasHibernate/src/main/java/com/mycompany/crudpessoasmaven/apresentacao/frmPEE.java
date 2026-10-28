@@ -5,6 +5,7 @@
 package com.mycompany.crudpessoasmaven.apresentacao;
 
 import com.mycompany.crudpessoasmaven.modelo.Controle;
+import com.mycompany.crudpessoasmaven.modelo.Estaticos;
 import com.mycompany.crudpessoasmaven.modelo.Pessoa;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,8 +201,13 @@ public class frmPEE extends javax.swing.JDialog
         }
         if (listaPessoas.size() > 1)
         {
+            Estaticos.listaPessoas = listaPessoas;
             frmSelecao frmS = new frmSelecao(null, true);
             frmS.setVisible(true);
+            txfId.setText(Estaticos.pessoa.getId().toString());
+            txfNome.setText(Estaticos.pessoa.getNome());
+            txfRg.setText(Estaticos.pessoa.getRg());
+            txfCpf.setText(Estaticos.pessoa.getCpf());
         }
     }//GEN-LAST:event_btnPesquisarPorNomeActionPerformed
 
