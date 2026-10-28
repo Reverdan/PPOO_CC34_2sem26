@@ -2,6 +2,7 @@ package com.mycompany.crudpessoasmaven.modelo;
 
 import com.mycompany.crudpessoasmaven.DAL.Conexao;
 import com.mycompany.crudpessoasmaven.DAL.PessoaDAO;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Controle
@@ -11,6 +12,7 @@ public class Controle
 
     public void cadastrarPessoa(List<String> listaDadosPessoa)
     {
+        this.mensagem = "";
         Validacao validacao = new Validacao();
         validacao.validarDadosPessoa(listaDadosPessoa);
 
@@ -28,7 +30,7 @@ public class Controle
 
             PessoaDAO dao = new PessoaDAO();
             dao.cadastrarPessoa(pessoa);
-            this.mensagem = Conexao.mensagem;
+            this.mensagem = dao.getMensagem();
         }
     }
 
@@ -50,7 +52,7 @@ public class Controle
             PessoaDAO dao = new PessoaDAO();
             pessoa = dao.pesquisarPessoa(pessoa);
 
-            this.mensagem = Conexao.mensagem;
+            this.mensagem = dao.getMensagem();
 
             return pessoa;
         }
@@ -75,7 +77,7 @@ public class Controle
 
             PessoaDAO dao = new PessoaDAO();
             dao.editarPessoa(pessoa);
-            this.mensagem = Conexao.mensagem;
+            this.mensagem = dao.getMensagem();
         }
     }
 
@@ -95,38 +97,28 @@ public class Controle
 
             PessoaDAO dao = new PessoaDAO();
             dao.excluirPessoa(pessoa);
-            this.mensagem = Conexao.mensagem;
+            this.mensagem = dao.getMensagem();
         }
     }
 
-    public List<Pessoa> pesquisarPessoaPorNome(String nome)
+    public List<Pessoa> pesquisarPessoaPorNome(List<String> listaDadosPessoa)
     {
-        if (nome == null || nome.trim().isEmpty())
+        this.mensagem = "";
+        List<Pessoa> listaRetorno = new ArrayList<>();
+        Validacao validacao = new Validacao();
+        validacao.validarDadosPessoa(listaDadosPessoa);
+
+        if (validacao.getMensagem().equals(""))
         {
-            this.mensagem = "O nome é obrigatório para a pesquisa.";
-            return null;
+            Pessoa pessoa = new Pessoa();
+            pessoa.setNome(listaDadosPessoa.get(1));
+            PessoaDAO dao = new PessoaDAO();
+            listaRetorno = dao.pesquisarPessoaporNome(pessoa);
         }
-
-        if (nome.trim().length() < 3)
+        else
         {
-            this.mensagem = "O nome deve possuir no mínimo 3 caracteres.";
-            return null;
+            this.mensagem = validacao.getMensagem();
         }
-
-        if (nome.length() > 50)
-        {
-            this.mensagem = "O nome deve possuir no máximo 50 caracteres.";
-            return null;
-        }
-
-        Pessoa pessoa = new Pessoa();
-        pessoa.setNome(nome);
-
-        PessoaDAO dao = new PessoaDAO();
-        List<Pessoa> listaRetorno = dao.pesquisarPessoaporNome(pessoa);
-
-        this.mensagem = Conexao.mensagem;
-
         return listaRetorno;
     }
 

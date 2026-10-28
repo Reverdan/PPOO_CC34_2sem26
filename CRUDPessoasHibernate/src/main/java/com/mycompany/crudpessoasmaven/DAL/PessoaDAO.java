@@ -1,6 +1,5 @@
 package com.mycompany.crudpessoasmaven.DAL;
 
-
 import com.mycompany.crudpessoasmaven.modelo.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
+import org.hibernate.query.Query;
 
 public class PessoaDAO
 {
-
-    //Conexao Conexao = new Conexao();
-
+    private String mensagem;
+    
     public void cadastrarPessoa(Pessoa pessoa)
     {
+        this.mensagem = "";
         try
         {
             Session session = HibernateUtil.getSessionFactory().openSession();
@@ -26,196 +25,97 @@ public class PessoaDAO
             session.persist(pessoa);
             transaction.commit();
             session.close();
-            Conexao.mensagem = "Pessoa cadastrada !";
+            this.mensagem = "Pessoa cadastrada !";
         }
         catch (Exception e)
         {
-            Conexao.mensagem = "Erro ao cadastrar";
+            this.mensagem = "Erro ao cadastrar";
         }
-
-        /*Connection conn = Conexao.conectar();
-
-        if (conn != null)
-        {
-            String sql = "INSERT INTO Pessoas (nome, rg, cpf) VALUES (?, ?, ?)";
-
-            try (PreparedStatement stmt = conn.prepareStatement(sql))
-            {
-                stmt.setString(1, pessoa.getNome());
-                stmt.setString(2, pessoa.getRg());
-                stmt.setString(3, pessoa.getCpf());
-
-                int linhasAfetadas = stmt.executeUpdate();
-
-                if (linhasAfetadas > 0)
-                {
-                    Conexao.mensagem = "Pessoa cadastrada com sucesso.";
-                }
-                else
-                {
-                    Conexao.mensagem = "Falha ao cadastrar a pessoa. Nenhuma linha foi afetada.";
-                }
-            }
-            catch (SQLException e)
-            {
-                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
-            }
-            finally
-            {
-                //Conexao.desconectar();
-            }
-        }*/
     }
 
     public Pessoa pesquisarPessoa(Pessoa pessoa)
     {
-        Connection conn = Conexao.conectar();
-
-        if (conn != null)
+        this.mensagem = "";
+        try
         {
-            String sql = "SELECT id, nome, rg, cpf FROM Pessoas WHERE id = ?";
-
-            try (PreparedStatement stmt = conn.prepareStatement(sql))
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            pessoa = session.find(Pessoa.class, pessoa.getId());
+            session.close();
+            if (pessoa == null)
             {
-                stmt.setInt(1, pessoa.getId());
-
-                try (ResultSet rs = stmt.executeQuery())
-                {
-                    if (rs.next())
-                    {
-                        pessoa.setId(rs.getInt("id"));
-                        pessoa.setNome(rs.getString("nome"));
-                        pessoa.setRg(rs.getString("rg"));
-                        pessoa.setCpf(rs.getString("cpf"));
-                        Conexao.mensagem = "Pesquisa realizada";
-                    }
-                    else
-                    {
-                        Conexao.mensagem = "Não existe pessoa com este ID";
-                    }
-                }
-            }
-            catch (SQLException e)
-            {
-                Conexao.mensagem = "Erro ao pesquisar pessoa: " + e.getMessage();
-            }
-            finally
-            {
-                Conexao.desconectar();
+                this.mensagem = "Não existe pessoa com este ID";
             }
         }
-
+        catch (Exception e)
+        {
+            this.mensagem = "Erro ao pesquisa";
+        }
         return pessoa;
     }
 
     public void editarPessoa(Pessoa pessoa)
     {
-        Connection conn = Conexao.conectar();
-
-        if (conn != null)
+        this.mensagem = "";
+        try
         {
-            String sql = "UPDATE Pessoas SET nome = ?, rg = ?, cpf = ? WHERE id = ?";
-
-            try (PreparedStatement stmt = conn.prepareStatement(sql))
-            {
-                stmt.setString(1, pessoa.getNome());
-                stmt.setString(2, pessoa.getRg());
-                stmt.setString(3, pessoa.getCpf());
-                stmt.setInt(4, pessoa.getId());
-
-                int linhasAfetadas = stmt.executeUpdate();
-
-                if (linhasAfetadas > 0)
-                {
-                    Conexao.mensagem = "Pessoa atualizada com sucesso.";
-                }
-                else
-                {
-                    Conexao.mensagem = "Falha ao atualizar a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
-                }
-            }
-            catch (SQLException e)
-            {
-                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
-            }
-            finally
-            {
-                Conexao.desconectar();
-            }
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.merge(pessoa);
+            transaction.commit();
+            session.close();
+            this.mensagem = "Pessoa editada !";
+        }
+        catch (Exception e)
+        {
+            this.mensagem = "Erro ao editar";
         }
     }
 
     public void excluirPessoa(Pessoa pessoa)
     {
-        Connection conn = Conexao.conectar();
-
-        if (conn != null)
+        this.mensagem = "";
+        try
         {
-            String sql = "DELETE FROM Pessoas WHERE id = ?";
-
-            try (PreparedStatement stmt = conn.prepareStatement(sql))
-            {
-                stmt.setInt(1, pessoa.getId());
-
-                int linhasAfetadas = stmt.executeUpdate();
-
-                if (linhasAfetadas > 0)
-                {
-                    Conexao.mensagem = "Pessoa excluída com sucesso.";
-                }
-                else
-                {
-                    Conexao.mensagem = "Falha ao excluir a pessoa. Nenhuma linha foi afetada ou o ID não foi encontrado.";
-                }
-            }
-            catch (SQLException e)
-            {
-                Conexao.mensagem = "Erro ao executar a operação no banco de dados: " + e.getMessage();
-            }
-            finally
-            {
-                Conexao.desconectar();
-            }
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            Transaction transaction = session.beginTransaction();
+            session.remove(pessoa);
+            transaction.commit();
+            session.close();
+            this.mensagem = "Pessoa excluída !";
+        }
+        catch (Exception e)
+        {
+            this.mensagem = "Erro ao excluir";
         }
     }
 
     public List<Pessoa> pesquisarPessoaporNome(Pessoa pessoa)
     {
-        Connection conn = Conexao.conectar();
-        List<Pessoa> listaPessoas = new ArrayList<>();
-
-        if (conn != null)
+        this.mensagem = "";
+        List<Pessoa> listaDePessoas = new ArrayList<>();
+        try
         {
-            String sql = "SELECT id, nome, rg, cpf FROM Pessoas WHERE nome LIKE ?";
+            Session session = HibernateUtil.getSessionFactory().openSession();
 
-            try (PreparedStatement stmt = conn.prepareStatement(sql))
-            {
-                stmt.setString(1, "%" + pessoa.getNome() + "%");
+            String hql = "FROM Pessoa p WHERE LOWER(p.nome) LIKE LOWER(:nome)";
+            Query<Pessoa> query = session.createQuery(hql, Pessoa.class);
 
-                try (ResultSet rs = stmt.executeQuery())
-                {
-                    while (rs.next())
-                    {
-                        Pessoa p = new Pessoa();
-                        p.setId(rs.getInt("id"));
-                        p.setNome(rs.getString("nome"));
-                        p.setRg(rs.getString("rg"));
-                        p.setCpf(rs.getString("cpf"));
+            query.setParameter("nome", "%" + pessoa.getNome() + "%");
 
-                        listaPessoas.add(p);
-                    }
-                }
-            }
-            catch (SQLException e)
-            {
-                Conexao.mensagem = "Erro ao pesquisar pessoas por nome: " + e.getMessage();
-            }
-            finally
-            {
-                Conexao.desconectar();
-            }
+            listaDePessoas = query.getResultList();
+            session.close();
+            this.mensagem = "Pesquisa realizada com sucesso.";
+        }
+        catch (Exception e)
+        {
+            this.mensagem = "Erro ao pesquisar pessoa.";
         }
 
-        return listaPessoas;
+        return listaDePessoas;
+    }
+    
+    public String getMensagem()
+    {
+        return mensagem;
     }
 }

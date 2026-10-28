@@ -68,6 +68,7 @@ public class frmPEE extends javax.swing.JDialog
         btnPesquisarPorId.addActionListener(this::btnPesquisarPorIdActionPerformed);
 
         btnPesquisarPorNome.setText("Pesquisar");
+        btnPesquisarPorNome.addActionListener(this::btnPesquisarPorNomeActionPerformed);
 
         btnExcluir.setText("Excluir");
         btnExcluir.addActionListener(this::btnExcluirActionPerformed);
@@ -153,9 +154,12 @@ public class frmPEE extends javax.swing.JDialog
     {//GEN-HEADEREND:event_btnPesquisarPorIdActionPerformed
         Controle controle = new Controle();
         Pessoa pessoa = controle.pesquisarPessoa(txfId.getText());
-        txfNome.setText(pessoa.getNome());
-        txfRg.setText(pessoa.getRg());
-        txfCpf.setText(pessoa.getCpf());
+        if (pessoa != null)
+        {
+            txfNome.setText(pessoa.getNome());
+            txfRg.setText(pessoa.getRg());
+            txfCpf.setText(pessoa.getCpf());
+        }
         JOptionPane.showMessageDialog(null, controle.getMensagem());
     }//GEN-LAST:event_btnPesquisarPorIdActionPerformed
 
@@ -173,6 +177,33 @@ public class frmPEE extends javax.swing.JDialog
 
 
     }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnPesquisarPorNomeActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnPesquisarPorNomeActionPerformed
+    {//GEN-HEADEREND:event_btnPesquisarPorNomeActionPerformed
+        Controle controle = new Controle();
+        List<String> listaDadosPessoa = new ArrayList<>();
+        listaDadosPessoa.add("0");
+        listaDadosPessoa.add(txfNome.getText());
+        listaDadosPessoa.add("");
+        listaDadosPessoa.add("");
+        List<Pessoa> listaPessoas = controle.pesquisarPessoaPorNome(listaDadosPessoa);
+        if (listaPessoas == null || listaPessoas.size() == 0)
+        {
+            JOptionPane.showMessageDialog(null, controle.getMensagem());
+        }
+        if (listaPessoas.size() == 1)
+        {
+            txfId.setText(listaPessoas.get(0).getId().toString());
+            txfNome.setText(listaPessoas.get(0).getNome());
+            txfRg.setText(listaPessoas.get(0).getRg());
+            txfCpf.setText(listaPessoas.get(0).getCpf());
+        }
+        if (listaPessoas.size() > 1)
+        {
+            frmSelecao frmS = new frmSelecao(null, true);
+            frmS.setVisible(true);
+        }
+    }//GEN-LAST:event_btnPesquisarPorNomeActionPerformed
 
     /**
      * @param args the command line arguments
